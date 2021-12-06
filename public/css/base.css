@@ -91,7 +91,6 @@ body {
     left: 50%;
     transform: translateX(-50%);
     font-size: calc(6 * 100%);
-    color: #FFF;
 }
 
 .mana_red::after {
