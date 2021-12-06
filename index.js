@@ -5,9 +5,9 @@ const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(express.static('public'));
+app.use(express.static('/public'));
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + "/" + file);
+    res.sendFile(path.join(__dirname, '/public/views/index.html'));
 });
 
 // var files = fs.readdirSync('./public/views/');
