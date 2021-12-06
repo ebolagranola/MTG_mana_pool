@@ -7,7 +7,7 @@ const port = process.env.PORT || 8080;
 
 app.use(express.static('public'));
 app.get('/', function(req, res) {
-    res.sendFile(file, {root: './views/'});
+    res.sendFile(__dirname + "/" + file);
 });
 
 // var files = fs.readdirSync('./public/views/');
