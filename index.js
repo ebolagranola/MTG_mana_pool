@@ -11,14 +11,14 @@ var files = fs.readdirSync('./public/views/');
 files.forEach(function(file) {
     if (file == "index.html") {
         app.get('/', function(req, res) {
-            res.sendFile(path.join(__dirname, '/views/' + file));
+            res.sendFile('/public/views/' + file);
         });
     } else {
         app.get('/' + file.replace(".html", ""), function(req, res) {
-            res.sendFile(path.join(__dirname, '/views/' + file));
+            res.sendFile('/public/views/' + file);
         });
     }
 });
 
 app.listen(port);
-console.log('Server started at http://localhost:' + port);
+console.log('Server running at localhost:' + port);
