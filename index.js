@@ -11,11 +11,11 @@ var files = fs.readdirSync('./public/views/');
 files.forEach(function(file) {
     if (file == "index.html") {
         app.get('/', function(req, res) {
-            res.sendFile(__dirname + '/public/views/' + file, {root: './public' });
+            res.sendFile('/public/views/' + file, {root: './public/views' });
         });
     } else {
         app.get('/' + file.replace(".html", ""), function(req, res) {
-            res.sendFile(__dirname + '/public/views/' + file, {root: './public' });
+            res.sendFile(__dirname + '/public/views/' + file, {root: './public/views' });
         });
     }
 });
