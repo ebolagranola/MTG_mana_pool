@@ -11,7 +11,7 @@ var files = fs.readdirSync('./public/views/');
 files.forEach(function(file) {
     if (file == "index.html") {
         app.get('/', function(req, res) {
-            res.sendFile('/public/views/' + file, {root: './public/views' });
+            res.sendFile(file, {root: './public/views' });
         });
     } else {
         app.get('/' + file.replace(".html", ""), function(req, res) {
