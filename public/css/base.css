@@ -64,7 +64,8 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: calc(6 * 100%);
+    font-size: 8vw
+    line-height: 100%;
     pointer-events: none;
 }
 
