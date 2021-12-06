@@ -5,17 +5,17 @@ const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static('./public'));
 
 var files = fs.readdirSync('./public/views/');
 files.forEach(function(file) {
     if (file == "index.html") {
         app.get('/', function(req, res) {
-            res.sendFile(__dirname + '/public/views/' + file);
+            res.sendFile(__dirname + '/public/views/' + file, {root: './public' });
         });
     } else {
         app.get('/' + file.replace(".html", ""), function(req, res) {
-            res.sendFile(__dirname + '/public/views/' + file);
+            res.sendFile(__dirname + '/public/views/' + file, {root: './public' });
         });
     }
 });
