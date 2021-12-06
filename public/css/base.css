@@ -74,7 +74,7 @@ body {
 }
 
 .minus_mana {
-    transform: translate(-50%, -33%);
+    transform: translate(-50%, -20%);
 }
 
 .mana_black > .add_mana, .mana_black > .remove_mana {
