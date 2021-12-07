@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>draw</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+        <script type="module" crossorigin="anonymous" src="/js/draw.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/draw.css"/>
+    </head>
+
+    <body>
+        <div id="canvasContainer" class="flex_container">
+            <div id="canvasWrapper">
+                <canvas id="canvas" width="1280" height="720"></canvas>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row" id="controls">
+                <div id="paletteWrapper" class="flex_container col-lg">
+                    <div id="displayColor" style=""></div>
+                    <canvas id="colorPicker" width="600" height="300"></canvas>
+                    <div id="colorSelectCircle">
+                        <div class=""></div>
+                    </div>
+                </div>
+                <div id="controlPanel" class="col-lg">
+                    <div id="strokeContainer" class="flex_container">
+                        <input id="strokeInput" type="range" min="1" max="500" value="50" oninput="readRangeInput(this.value);">
+                        <div id="strokeValue"></div>
+                    </div>
+                    <button id="refreshBtn" type="button" onclick="location.reload();">reset</button>
+                    <div id="trtlPayContainer">
+                        <div class="card">
+                            Donate some TRTL to download your creation
+                        </div>
+                        <input id="donation" type="number" value="1000.00" oninput="(function(el){el.value=parseFloat(el.value).toFixed(2);})(this)">
+                        <button id="download" type="button" onclick="donate();">donate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="mouseBrush">
+            <div id="mousePointer"></div>
+        </div>
+    </body>
+</html>
+
+<script type="text/javascript">
+let strokeValue = document.getElementById("strokeValue");
+let mouseBrush = document.getElementById("mouseBrush");
+function readRangeInput(inputVal) {
+  strokeValue.innerHTML  = inputVal;
+  mouseBrush.style.width = mouseBrush.style.height = inputVal-4 + "px";
+}
+document.addEventListener("DOMContentLoaded", (readRangeInput(50)));
+
+function download() {
+  let link = document.createElement('a');
+  link.download = 'img.png';
+  link.href = document.getElementById('canvas').toDataURL();
+  link.click();
+}
+
+function donate() {
+  let xhr = new XMLHttpRequest();
+  let xhrRes;
+  let url = "https://api.turtlepay.io/v2/new";
+  xhr.open("POST", url, true);
+  let amt = parseInt(document.getElementById("donation").value * 100);
+  let payload = {
+    "address": "TRTLv1S7wGzcFfwUB4tXq24cjScR5T5tmCYecTTSBByLFeADRV52wcxfBQYBsfJFm5DX9DVz4GaHUE1dmCHpdMEAQY75PY8RtSj",
+    "privateViewKey": "8a26e96c154fe126eff466836a0c5f951555f06825f2f8b740fba399f5a8f709",
+    "amount": amt,
+    "confirmations": 30
+  };
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.onreadystatechange = () => {
+    xhrRes = JSON.parse(xhr.response);
+    document.querySelector("#trtlPayContainer .card").innerHTML = "TRTL Address: " + xhrRes.sendToAddress + "<img src='" + xhrRes.qrCode + "'>";
+  };
+  xhr.send(JSON.stringify(payload));
+  document.querySelector("#trtlPayContainer .card").innerHTML = "Loading...";
+  download();
+}
+
+</script>
