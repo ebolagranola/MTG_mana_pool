@@ -7,7 +7,7 @@ const port = process.env.PORT || 8080;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-var files = fs.readdirSync('./public/views/');
+const files = fs.readdirSync('./public/views/');
 files.forEach(function(file) {
     if (file == "index.html") {
         app.get('/', function(req, res) {
