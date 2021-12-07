@@ -193,9 +193,16 @@ input#strokeInput {
   margin-top: 16px;
 }
 
+@keyframes flash {
+    0% { border: 0px solid #000 }
+    50% { border: 2px solid #f22 }
+    100% { border: 0px solid #000 }
+}
+
 #controlPanel button:hover {
   border: 2px solid #f00;
   transform: scale(1.03);
+  animation: flash 0.5s ease infinite;
 }
 
 #refreshBtn {
