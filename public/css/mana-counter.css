@@ -57,7 +57,7 @@ body {
 
 .add_mana:hover, .remove_mana:hover {
     transition: var(--transition_time);
-    opacity: 50%;    
+    opacity: 50%;
 }
 
 .plus_mana, .minus_mana {
@@ -137,13 +137,13 @@ body {
     width: 100%;
     border-radius: 8px;
     border: none;
-    background-color: #AB72FE;
+    background-color: #181818;
     color: white;
     font-size: 32px;
     transition: var(--transition_time);
 }
 
 .reset_wrapper > button:active {
-    background-color: #7867E6;
+    background-color: #111;
     transition: var(--transition_time);
 }
