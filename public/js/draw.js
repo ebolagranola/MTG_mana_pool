@@ -33,6 +33,42 @@ function init() {
         c.setColor(colorPicker.color);
         mouseBrush.style.borderColor = "rgb("+colorPicker.color.r+", "+colorPicker.color.g+", "+colorPicker.color.b+")";
     });
+
+    // remove 'DRAW!' from screen on click
+    let firstRun = true;
+    canvas.addEventListener("click", function(e) {
+        let intervalID = setInterval(function() {
+          let h1 = canvas.parentNode.lastElementChild;
+          let opacity = Number(window.getComputedStyle(h1).getPropertyValue("opacity"));
+          if (opacity > 0) {
+              opacity = opacity - 0.01;
+              h1.style.opacity = opacity;
+          } else {
+              clearInterval(intervalID);
+          }
+        }, 300);
+        e.preventDefault();
+    });
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
+document.addEventListener('DOMContentLoaded', (e) => {
+    let a = document.getElementsByClassName("add_mana");
+    for (let i = 0; i < a.length; i++) {
+        a[i].addEventListener("click", function(e) {
+            a[i].parentNode.lastElementChild.innerHTML++;
+            e.preventDefault();
+        });
+    }
+
+    let r = document.getElementsByClassName("remove_mana");
+    for (let i = 0; i < r.length; i++) {
+        r[i].addEventListener("mousedown", function(e) {
+            if (r[i].parentNode.lastElementChild.innerHTML > 0) {
+                r[i].parentNode.lastElementChild.innerHTML--;
+            }
+            e.preventDefault();
+        });
+    }
+});
