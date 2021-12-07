@@ -5,23 +5,19 @@ const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 8080;
 
-app.use(express.static('/public'));
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '/public/views/index.html'));
+app.use(express.static(path.join(__dirname, 'public')));
+
+var files = fs.readdirSync('./public/views/');
+files.forEach(function(file) {
+    if (file == "index.html") {
+        app.get('/', function(req, res) {
+            res.sendFile(path.join(__dirname, "/public/views/" + file));
+        });
+    } else {
+        app.get('/' + file.replace(".html", ""), function(req, res) {
+            res.sendFile(path.join(__dirname, "/public/views/" + file));
+        });
+    }
 });
-
-// var files = fs.readdirSync('./public/views/');
-// files.forEach(function(file) {
-//     if (file == "index.html") {
-//         app.get('/', function(req, res) {
-//             res.sendFile(file, {root: './views/'});
-//         });
-//     } else {
-//         app.get('/' + file.replace(".html", ""), function(req, res) {
-//             res.sendFile(file, {root: './views/' });
-//         });
-//     }
-// });
-
 app.listen(port);
 console.log('Server running at localhost:' + port);
