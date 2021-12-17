@@ -46,9 +46,8 @@ io.on('connection', (socket) => {
   socket.emit('dataURL', reel);
 
   socket.on('dataURL', (dataURL) => {
-    console.log("help");
     reel.unshift(dataURL);
-    while (reel.length > 5) { console.log('popping'); reel.pop(); }
+    while (reel.length > 5) { reel.pop(); }
     socket.emit('dataURL', reel);
     let imgsJSON = {
       "imgs": reel
@@ -57,7 +56,6 @@ io.on('connection', (socket) => {
       if (err) throw err;
       logger.warn("server\t\t", "JSON data saved");
     });
-    // logger.debug("imageURL\t:", "[ " + reel.join(', ') + " ]");
   });
 
   socket.on('disconnect', () => {

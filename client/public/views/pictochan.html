@@ -67,7 +67,8 @@
     </div>
 
     <script type="text/javascript">
-      const socket = io("ws://www.metamind.studio/pictochan");
+      // const socket = io("ws://localhost:8080");
+      const socket = io.connect();
       socket.on('connection');
       function sendMessage() {
         let img = document.getElementById("canvas_input").toDataURL();
