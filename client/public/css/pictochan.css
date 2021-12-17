@@ -1,0 +1,116 @@
+:root {
+  --brown: #5C4B51;
+  --green: #8CBEB2;
+  --tan: #F2EBBF;
+  --yellow: #F3B562;
+  --red: #F06060;
+  --border_radius_sm: 8px;
+  --border_radius_md: 16px;
+  --border_radius_lg: 32px;
+}
+
+body {
+  background-color: #FFF;
+}
+
+.row {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+#header_col {
+  padding: 0px;
+}
+
+h1 {
+  color: #333;
+}
+
+canvas {
+  width: 100%;
+  border: 2px #333 solid;
+  border-radius: var(--border_radius_sm);
+}
+
+img {
+  width: 100%;
+}
+
+button {
+  width: 128px;
+  height: 42px;
+  border-radius: 4px;
+  font-size: 1.1em;
+  margin-top: 8px;
+}
+
+.user_input h1 {
+  display: inline-block;
+}
+
+.user_input canvas {
+  width: 100%;
+  border: 2px #333 solid;
+  border-radius: var(--border_radius_sm);
+}
+
+.user_input textarea {
+  width: 100%;
+  height: 8em;
+  border-radius: var(--border_radius_sm);
+  background-color: var(--tan);
+}
+
+.user_input button {
+  float: right;
+}
+
+#mouseBrush {
+  width: 5px;
+}
+
+#color_palette_wrapper {
+  margin-left: auto;
+}
+
+#color_palette {
+  height: 100%;
+  justify-content: end;
+  display: flex;
+}
+
+.color {
+  margin: auto;
+}
+
+.color > div {
+  height: 48px;
+  width: 48px;
+  border: 6px solid black;
+  border-radius: 8px;
+  margin: 4px;
+}
+
+.color_white:hover,  .color_black:hover {
+  transform: scale(1.1);
+}
+
+.color_white {
+  float: right;
+}
+
+.color_black {
+  background-color: #000;
+}
+
+#send_message {
+  margin: auto;
+}
+
+#canvas_col {
+  padding: 0px;
+}
+
+.img_w .col-lg {
+  padding: 0px;
+}

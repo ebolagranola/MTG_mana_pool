@@ -11,9 +11,9 @@ function currTime() {
   return dm;
 }
 
-let runINFO = true;
-let runWARN = true;
-let runDEBUG = true;
+let runINFO = false;
+let runWARN = false;
+let runDEBUG = false;
 
 Logger.info = function(header, msg) {
   if (runINFO) {

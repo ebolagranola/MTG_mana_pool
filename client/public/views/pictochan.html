@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+      <link rel="stylesheet" type='text/css' href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <script type="text/javascript" src='https://cdn.socket.io/4.4.0/socket.io.min.js' integrity="sha384-1fOn6VtTq3PWwfsOrk45LnYcGosJwzMHv+Xh/Jx5303FVOXzEnw0EpLv30mtjmlj" crossorigin="anonymous"></script>
+      <link rel="stylesheet" type='text/css' href="/css/pictochan.css">
+      <script type="module" src='/js/pictochan_draw.js'></script>
+      <script type="module" src='/js/draw_utils.js'></script>
+    <title>pictochan</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-4" id="header_col">
+          <h1>pictochan</h1>
+        </div>
+        <div id="color_palette_wrapper">
+          <div id="color_palette">
+            <div class="color">
+              <div class="color_white" id="whiteEl"></div>
+            </div>
+            <div class="color">
+              <div class="color_black" id="blackEl"></div>
+            </div>
+            <button id='send_message' onclick='sendMessage()'>Send</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg" id="canvas_col">
+          <canvas id="canvas_input"></canvas>
+          <div id="mouseBrush">
+            <div id="mousePointer"></div>
+          </div>
+          <div id="colorSelectCircle">
+            <div></div>
+          </div>
+          <h1 id="site_header"></h1>
+        </div>
+      </div>
+      <div class="row img_w">
+        <div class="col-lg">
+          <img class="displayImg"></img>
+        </div>
+      </div>
+      <div class="row img_w">
+        <div class="col-lg">
+          <img class="displayImg"></img>
+        </div>
+      </div>
+      <div class="row img_w">
+        <div class="col-lg">
+          <img class="displayImg"></img>
+        </div>
+      </div>
+      <div class="row img_w">
+        <div class="col-lg">
+          <img class="displayImg"></img>
+        </div>
+      </div>
+      <div class="row img_w">
+        <div class="col-lg">
+          <img class="displayImg"></img>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      const socket = io("ws://localhost:8080");
+      socket.on('connection');
+      function sendMessage() {
+        let img = document.getElementById("canvas_input").toDataURL();
+        socket.emit('dataURL', img);
+      }
+      socket.on('dataURL', (dataURLs) => {
+        let imgs = document.getElementsByClassName("displayImg");
+        dataURLs.forEach((el, i) => {
+          imgs[i].src = el;
+        });
+      });
+
+      document.addEventListener('DOMContentLoaded', (e) => {
+        let canvas = document.getElementById("canvas_input");
+        canvas.height = canvas.width / (16/9);
+      });
+    </script>
+  </body>
+</html>

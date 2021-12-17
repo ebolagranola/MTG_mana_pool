@@ -22,5 +22,53 @@ files.forEach(function(file) {
     }
 });
 
-app.listen(port);
-console.log('Server running at localhost:' + port);
+server.listen(port, () => {
+  logger.info('Server running at localhost:' + port);
+});
+
+let reel = [];
+fs.readFile('server/storage/imgs.json', function (err, data) {
+  if (err) throw err;
+  if (data.length > 0) {
+    reel = JSON.parse(data).imgs;
+  } else {
+    reel = [];
+  }
+});
+
+let clients = [];
+io.on('connection', (socket) => {
+  clients.push(socket.id);
+  logger.debug("connected\t: ", socket.id);
+  logger.debug("count\t\t: ", clients.length);
+  logger.debug("clts\t\t: ", "[ " + clients.join(', ') + " ]");
+  logger.info("sending\t: ", reel.length+" imgs");
+  socket.emit('dataURL', reel);
+
+  socket.on('dataURL', (dataURL) => {
+    console.log("help");
+    reel.unshift(dataURL);
+    while (reel.length > 5) { console.log('popping'); reel.pop(); }
+    socket.emit('dataURL', reel);
+    let imgsJSON = {
+      "imgs": reel
+    }
+    fs.writeFile('server/storage/imgs.json', JSON.stringify(imgsJSON), (err) => {
+      if (err) throw err;
+      logger.warn("server\t\t", "JSON data saved");
+    });
+    // logger.debug("imageURL\t:", "[ " + reel.join(', ') + " ]");
+  });
+
+  socket.on('disconnect', () => {
+    clients.splice(clients.indexOf(socket.id), 1);
+    logger.warn("disconnected\t: ", socket.id);
+    logger.debug("count\t\t: ", clients.length);
+    logger.debug("clts\t\t: ", "[ " + clients.join(', ') + " ]");
+  });
+});
+
+async function fetchSockets() {
+  const connectedSockets = await io.fetchSockets();
+  logger.info("Active Sockets: ", connectedSockets);
+}
